@@ -4,7 +4,7 @@ from ast import parse, NodeTransformer, AST , NodeVisitor
 class Engine:
     def From(self, file:str):
         with open(file,"r") as r:
-            return Selector(parse(r.read()))
+            return Selector(parse(r.read(),type_comments=True))
             
 
 class Selector:

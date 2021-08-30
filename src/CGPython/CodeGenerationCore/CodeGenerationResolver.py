@@ -2,7 +2,7 @@ from abc import ABC, abstractclassmethod, abstractmethod
 
 class CodeGenResolver(ABC):
     @abstractmethod
-    def BuildContainer():
+    def Build():
         pass
     @abstractmethod
     def RegisterEngine(engine):
