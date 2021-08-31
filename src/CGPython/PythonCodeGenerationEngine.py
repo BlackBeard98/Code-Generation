@@ -1,5 +1,5 @@
 from ast import *
-
+import os
 from CodeGenerationCore import CodeGenEngine
 from CodeGenerationCore import CodeGenResolver
 from PythonTarget import PythonMultipleTargets , PythonSingleTarget
@@ -46,7 +46,7 @@ class PythonCodeGenEngine(CodeGenEngine):
         return self.__resolver
 
     def From(self ,path: str) -> 'PythonCodeGenEngine':
-        self.project = path
+        self.project =  os.path.abspath(path).replace("\\","/")
         return self
 
     def Select(self,i_type:T)-> PythonMultipleTargets[T]:
@@ -63,13 +63,13 @@ if __name__ == '__main__':
                    .DecoratedBy("singleton")
                 )
     temp = PythonCodeGenEngine(PythonGenerationResolver())
-    x = (temp.From("C:/Users/carlos/Desktop/Tesis/Codigo/Code-Generation/src/mod1.py")
+    x = (temp.From("src/mod1.py")
              .Select(ClassDef())
              .Select(ClassDef())
              .Execute(func)
         )
     import astor
-    a = temp.mapper["C:/Users/carlos/Desktop/Tesis/Codigo/Code-Generation/src/mod1.py"]
+    a = temp.mapper[os.path.abspath("src/mod1.py").replace("\\","/")]
     
     print(astor.to_source(a))
    
