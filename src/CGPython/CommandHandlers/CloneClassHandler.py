@@ -1,11 +1,10 @@
 import ast
 from os import name
-import sys
-sys.path.append("..")
 from CodeGenerationCore import CommandHandler , Command , Target 
-#from CodeGenerationCore.CodeGenerationEngine import CodeGenEngine
+from CodeGenerationCore import Target
+from CodeGenerationCore import CodeGenEngine
 from Commands.CloneClassCommand import CloneClassCommand
-from ast import NodeTransformer, AST
+from ast import NodeTransformer
 
 def iter_fields(node):
     """
@@ -21,7 +20,7 @@ def iter_fields(node):
 class CloneClassCommandHandler(CommandHandler[CloneClassCommand], NodeTransformer):
 
 
-    def ProcessTarget(self, target, engine):
+    def ProcessTarget(self, target:Target, engine:CodeGenEngine):
         tree = engine.mapper[target.path]
         self.current_target = target
         self.visit_ClassDef

@@ -1,9 +1,7 @@
 from ast import *
-#from src.Core import Executer
-#from src.CGPython.CodeGenerationCore import CodeGenerationEngine
-#from src.CGPython import CodeGenerationCore
-from CodeGenerationCore.CodeGenerationEngine import CodeGenEngine
-from CodeGenerationCore.CodeGenerationResolver import CodeGenResolver
+
+from CodeGenerationCore import CodeGenEngine
+from CodeGenerationCore import CodeGenResolver
 from PythonTarget import PythonMultipleTargets , PythonSingleTarget
 from PythonCodeGenerationResolver import PythonGenerationResolver
 from Commands.CloneClassCommand import CloneClassCommand

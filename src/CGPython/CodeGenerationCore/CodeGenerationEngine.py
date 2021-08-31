@@ -1,5 +1,5 @@
 from abc import ABC, ABCMeta, abstractmethod
-from PythonCodeGenerationResolver import PythonGenerationResolver
+from .CodeGenerationResolver import CodeGenResolver
 #from Selector import Selector
 
 class CodeGenEngine(metaclass =ABCMeta):
@@ -20,7 +20,7 @@ class CodeGenEngine(metaclass =ABCMeta):
         
     @property
     @abstractmethod
-    def CodeGenerationResolver(self)->PythonGenerationResolver:
+    def CodeGenerationResolver(self)->CodeGenResolver:
         pass
 
     # @abstractmethod

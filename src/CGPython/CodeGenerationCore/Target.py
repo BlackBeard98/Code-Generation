@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class Using(ABC):
     
     @abstractmethod
-    def Using(self, usingSelector, key):
+    def Using(self, usingSelector):
         pass
 
 class Where(ABC):
@@ -11,10 +11,7 @@ class Where(ABC):
     def Where(self, WhereSelector):
         pass
 
-class AsMultiple(ABC):
-    @abstractmethod
-    def ASMultiple(self):
-        pass
+
 
 class TargetGet(ABC):
     @abstractmethod
@@ -25,18 +22,9 @@ class SingleTargeter(ABC):
    
     @property
     @abstractmethod
-    def Id(self):
-        pass
-   
-    @property
-    @abstractmethod
     def Node(self):
         pass
-    
-    @property
-    @abstractmethod
-    def SemanticSymbol(self):
-        pass
+  
 
     @property
     @abstractmethod
@@ -44,5 +32,8 @@ class SingleTargeter(ABC):
         pass
     
     @abstractmethod
-    def Execute(comandModifiers):
+    def Execute(self,comandModifiers):
         pass
+
+class Target(SingleTargeter,Using,Where,TargetGet):
+    pass

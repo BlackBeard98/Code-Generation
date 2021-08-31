@@ -3,13 +3,13 @@ sys.path.append('../')
 #from CodeGenerationCore.Target import Target 
 from CodeGenerationCore import CommandHandler
 from typing import Callable , Generic , TypeVar
-from CodeGenerationCore.CodeGenerationEngine import CodeGenEngine
+from CodeGenerationCore import CodeGenEngine , Target
 
 T = TypeVar("T")
 G = TypeVar("G")
 
 
-class PythonSingleTarget(Generic[T]):
+class PythonSingleTarget(Generic[T], Target):
     
     def __init__(self,node:T, engine:CodeGenEngine , path:str) -> None:
         self.path = path
@@ -29,11 +29,18 @@ class PythonSingleTarget(Generic[T]):
         x.Command = command
         x.ProcessTarget(self,self.engine)
 
-    # def Using(self, d:Callable[['PythonSingleTarget'],]):
-    #     pass
+    def Using(self, d:Callable[['PythonSingleTarget'],None]):
+        pass
+    def Where(self, WhereSelector):
+        pass
+    def Get(self , key , value):
+        pass
+    def Node(self):
+        pass
+    def DocumentPath(self):
+        pass
 
-
-class PythonMultipleTargets(Generic[T]):
+class PythonMultipleTargets(Generic[T], Target):
     def __init__(self,targets,engine:CodeGenEngine) -> None:
         self.targets:list[PythonSingleTarget] = targets
         self.engine = engine
@@ -51,3 +58,12 @@ class PythonMultipleTargets(Generic[T]):
 
     def Using(self, d:Callable[['PythonSingleTarget[T]'],None] ) ->'PythonMultipleTargets[T]':
         return self
+        
+    def Where(self, WhereSelector):
+        pass
+    def Get(self , key , value):
+        pass
+    def Node(self):
+        pass
+    def DocumentPath(self):
+        pass
