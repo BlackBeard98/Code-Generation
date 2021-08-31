@@ -5,6 +5,7 @@ from CodeGenerationCore import CommandHandler
 from typing import Callable , Generic , TypeVar
 from CodeGenerationCore import CodeGenEngine , Target
 
+
 T = TypeVar("T")
 G = TypeVar("G")
 
@@ -15,22 +16,27 @@ class PythonSingleTarget(Generic[T], Target):
         self.path = path
         self.node = node
         self.engine = engine
+        self.arg_dict = {}
 
     def Select(self, i_type:T) ->'PythonMultipleTargets[T]':
         from PythonCodeGenerationEngine import Selector
         return Selector(self.node,type(i_type)).run_descendants()
 
-    def Execute(self, commandModifier):
-        cmdType = commandModifier.__annotations__["cmd"]
+    def Execute(self, commandModifier:Callable):
+        cmdName = commandModifier.__code__.co_varnames[0]
+        cmdType = commandModifier.__annotations__[cmdName]
         self.engine.CodeGenerationResolver.Build()
         x =self.engine.CodeGenerationResolver.ResolveCommandHandler(cmdType)
-        command = cmdType()
-        commandModifier(command)
-        x.Command = command
+        self.arg_dict[cmdName] = cmdType()
+        solved_args = [self.arg_dict[x] for x in commandModifier.__code__.co_varnames]
+        commandModifier(*solved_args)
+        x.Command = solved_args[0]
         x.ProcessTarget(self,self.engine)
 
-    def Using(self, d:Callable[['PythonSingleTarget'],None]):
-        pass
+    def Using(self, d:Callable[['PythonSingleTarget'],tuple[None,str]]):
+        arg , name = d(self)
+        self.arg_dict[name] = arg 
+        return self
     def Where(self, WhereSelector):
         pass
     def Get(self , key , value):
@@ -56,7 +62,9 @@ class PythonMultipleTargets(Generic[T], Target):
         for tg in self.targets:
             tg.Execute(commandModifier)
 
-    def Using(self, d:Callable[['PythonSingleTarget[T]'],None] ) ->'PythonMultipleTargets[T]':
+    def Using(self, d:Callable[['PythonSingleTarget[T]'],tuple[None,str]] ) ->'PythonMultipleTargets[T]':
+        for tg in self.targets:
+            tg.Using(d)
         return self
         
     def Where(self, WhereSelector):

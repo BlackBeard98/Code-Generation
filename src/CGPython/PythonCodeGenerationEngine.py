@@ -58,14 +58,16 @@ class PythonCodeGenEngine(CodeGenEngine):
 
 
 if __name__ == '__main__':
-    def func(cmd:CloneClassCommand):
-        return (cmd.WithName( "generated")
+    def func(cmd:CloneClassCommand,name):
+        return (cmd.WithName(name + "_generated")
                    .DecoratedBy("singleton")
                 )
+           
     temp = PythonCodeGenEngine(PythonGenerationResolver())
     x = (temp.From("src/mod1.py")
              .Select(ClassDef())
              .Select(ClassDef())
+             .Using(lambda x: (x.node.name,"name"))
              .Execute(func)
         )
     import astor

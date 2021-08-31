@@ -1,5 +1,5 @@
 from typing import Callable
-@singleton
+@singleton(4)
 class A:
     """Return the pathname of the KOS root directory."""
     def __init__(self) -> None:
@@ -10,4 +10,7 @@ class A:
         class B:
             def __init__(self) -> None:
                 print("Soy __init__ de B")
+        class C:
+            def __init__(self) -> None:
+                print("Soy __init__ de C")
 a =A()
