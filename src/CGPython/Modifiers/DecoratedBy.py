@@ -8,10 +8,10 @@ class DecoratedBy():
     def Decorators(self, val):
         self.__decorators.append(val)
   
-    def DecoratedBy(self, decorator:str):
+    def DecoratedBy(self, decorator:str,*args):
         try  :
             self.Decorators
         except:
             self.__decorators = []
-        self.Decorators = decorator
+        self.Decorators = (decorator,args)
         return self

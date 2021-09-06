@@ -8,8 +8,10 @@ class InheritsFrom():
     def InheritsTypes(self, val):
         self.__inheritsTypes.append(val)
   
-    def InheritsFrom(self, i_type:type):
-        if self.InheritsTypes is None:
-            self.self.__inheritsTypes = []
+    def InheritsFrom(self, i_type:str):
+        try:
+            self.InheritsTypes
+        except:
+            self.__inheritsTypes = []
         self.InheritsTypes = i_type
         return self

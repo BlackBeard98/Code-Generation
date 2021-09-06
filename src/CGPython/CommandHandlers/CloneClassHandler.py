@@ -28,9 +28,16 @@ class CloneClassCommandHandler(CommandHandler[CloneClassCommand], NodeTransforme
 
     def visit_ClassDef (self, node:ast.ClassDef):
         if node == self.current_target.node:
-           
             node.name = self.Command.Name
-            node.decorator_list.extend([ast.Name(dec,ast.Load()) for dec in self.Command.Decorators])
+            node.bases.extend([ast.Name(base,ast.Load()) for base in self.Command.InheritsTypes])
+            for dec in self.Command.Decorators:
+                if dec[1] == ():
+                    node.decorator_list.append(ast.Name(dec[0],ast.Load()))
+                else:
+                    arg = [ast.parse(x,mode='eval') for x in dec[1]]
+                    node.decorator_list.append(ast.Call(ast.Name(dec[0],ast.Load()),arg,[]))
+                    
+            #node.decorator_list.extend([ast.Name(dec,ast.Load()) for dec in self.Command.Decorators])
         return NodeTransformer.generic_visit(self,node)
     
     def Command(self) :

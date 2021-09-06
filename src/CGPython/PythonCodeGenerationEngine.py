@@ -60,7 +60,10 @@ class PythonCodeGenEngine(CodeGenEngine):
 if __name__ == '__main__':
     def func(cmd:CloneClassCommand,name):
         return (cmd.WithName(name + "_generated")
-                   .DecoratedBy("singleton")
+                   .DecoratedBy("singleton","'casa' + 'carr'" , "5")
+                   .DecoratedBy("casa")
+                   .InheritsFrom("A")
+
                 )
            
     temp = PythonCodeGenEngine(PythonGenerationResolver())
@@ -68,6 +71,7 @@ if __name__ == '__main__':
              .Select(ClassDef())
              .Select(ClassDef())
              .Using(lambda x: (x.node.name,"name"))
+             .Where(lambda x:x.node.name == "B")
              .Execute(func)
         )
     import astor
