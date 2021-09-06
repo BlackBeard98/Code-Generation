@@ -67,8 +67,9 @@ class PythonMultipleTargets(Generic[T], Target):
             tg.Using(d)
         return self
         
-    def Where(self, WhereSelector):
-        pass
+    def Where(self, WhereSelector:Callable[['PythonSingleTarget[T]'],bool])->'PythonMultipleTargets[T]':
+        return PythonMultipleTargets([tg for tg in self.targets if WhereSelector(tg)],self.engine)
+
     def Get(self , key , value):
         pass
     def Node(self):
