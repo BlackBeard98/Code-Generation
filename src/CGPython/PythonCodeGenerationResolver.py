@@ -1,7 +1,7 @@
 from CodeGenerationCore.CodeGenerationResolver  import CodeGenResolver
 from CodeGenerationCore import CommandHandler
-from Commands import CloneClassCommand
-from CommandHandlers import CloneClassCommandHandler
+from .Commands import *
+from .CommandHandlers import *
 from CodeGenerationCore import Command
 import punq
 from typing import Generic
@@ -34,12 +34,3 @@ class PythonGenerationResolver(CodeGenResolver):
     def ResolveCommandHandler(self,commandBuilder:type)->CommandHandler:
         #x = type(commandBuilder)
         return self.builder.resolve(CommandHandler[commandBuilder])
-
-if __name__ == "__main__":
-    
-    a = PythonGenerationResolver()
-    a.Build()
-    x = a.ResolveCommandHandler(CloneClassCommand())
-   
-    print("hello")
-   

@@ -1,1 +1,2 @@
-from .CloneClassHandler import CloneClassCommandHandler
+from .ModifyClassCommandHandler import ModifyClassCommandHandler
+from .ModifyMethodCommandHandler import ModifyMethodCommandHandler

@@ -15,8 +15,11 @@ class CommandHandler(Generic[T]):
     @classmethod
     #@abstractmethod
     def CommandType(cls):
-        pass
-
+        return cls.__type
+    
+    @classmethod
+    def SetCommandType(cls,__type):
+        cls.__type = __type
     #@abstractmethod
     def ProcessTarget(self, target,engine):
         pass

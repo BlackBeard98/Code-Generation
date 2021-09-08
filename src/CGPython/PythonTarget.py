@@ -19,7 +19,7 @@ class PythonSingleTarget(Generic[T], Target):
         self.arg_dict = {}
 
     def Select(self, i_type:T) ->'PythonMultipleTargets[T]':
-        from PythonCodeGenerationEngine import Selector
+        from .PythonCodeGenerationEngine import Selector
         return Selector(self.node,type(i_type)).run_descendants()
 
     def Execute(self, commandModifier:Callable):

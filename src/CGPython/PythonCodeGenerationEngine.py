@@ -1,10 +1,11 @@
 from ast import *
 import os
+import sys 
 from CodeGenerationCore import CodeGenEngine
 from CodeGenerationCore import CodeGenResolver
-from PythonTarget import PythonMultipleTargets , PythonSingleTarget
-from PythonCodeGenerationResolver import PythonGenerationResolver
-from Commands.CloneClassCommand import CloneClassCommand
+from .PythonTarget import PythonMultipleTargets , PythonSingleTarget
+from .PythonCodeGenerationResolver import PythonGenerationResolver
+from .Commands import *
 from typing import Generic , TypeVar
 
 T = TypeVar("T")
@@ -58,22 +59,32 @@ class PythonCodeGenEngine(CodeGenEngine):
 
 
 if __name__ == '__main__':
-    def func(cmd:CloneClassCommand,name):
-        return (cmd.WithName(name + "_generated")
+    def func(cmd:ModifyClassCommand,name):
+        return (cmd
                    .DecoratedBy("singleton","'casa' + 'carr'" , "5")
                    .DecoratedBy("casa")
                    .InheritsFrom("A")
+                   .WithBody(
+"""
+def __init__(self, a:int):
+    self.a = a
+""")                
 
                 )
+    def func2(cmd:ModifyMethodCommand,name):
+        return cmd.DecoratedBy("si").WithName(name+"_soy").WithBody("pass")
+
            
     temp = PythonCodeGenEngine(PythonGenerationResolver())
     x = (temp.From("src/mod1.py")
              .Select(ClassDef())
-             .Select(ClassDef())
+             .Select(FunctionDef())
              .Using(lambda x: (x.node.name,"name"))
-             .Where(lambda x:x.node.name == "B")
-             .Execute(func)
+             .Where(lambda x:x.node.name != "soy")
+             .Execute(func2)
         )
+
+
     import astor
     a = temp.mapper[os.path.abspath("src/mod1.py").replace("\\","/")]
     

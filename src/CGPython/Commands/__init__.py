@@ -1,1 +1,2 @@
-from .CloneClassCommand import CloneClassCommand
+from .ModifyClassCommand import ModifyClassCommand
+from .ModifyMethodCommand import ModifyMethodCommand

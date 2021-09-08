@@ -1,1 +1,2 @@
-import PythonCodeGenerationEngine , PythonCodeGenerationResolver, PythonTarget
+from .PythonCodeGenerationEngine import PythonCodeGenEngine
+from .PythonCodeGenerationResolver import PythonGenerationResolver
