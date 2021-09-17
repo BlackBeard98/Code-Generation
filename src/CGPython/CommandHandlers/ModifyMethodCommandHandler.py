@@ -25,8 +25,14 @@ class ModifyMethodCommandHandler(CommandHandler[ModifyMethodCommand], NodeTransf
 
     def visit_FunctionDef (self, node:ast.FunctionDef):
         if node == self.current_target.node:
-            node.name = self.Command.Name
-            node.body = [self.Command.Body]
+            try:
+                node.name = self.Command.Name
+            except:
+                pass
+            try:
+                node.body = [self.Command.Body]
+            except:
+                pass
             for dec in self.Command.Decorators:
                 if dec[1] == ():
                     node.decorator_list.append(ast.Name(dec[0],ast.Load()))
