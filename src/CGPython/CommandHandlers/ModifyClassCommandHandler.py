@@ -36,6 +36,10 @@ class ModifyClassCommandHandler(CommandHandler[ModifyClassCommand], NodeTransfor
             except: 
                 pass
             try:
+                node.body.append(self.Command.Tail)
+            except:
+                pass
+            try:
                 for dec in self.Command.Decorators:
                     if dec[1] == ():
                         node.decorator_list.append(ast.Name(dec[0],ast.Load()))

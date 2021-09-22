@@ -1,2 +1,5 @@
 from .ModifyClassCommand import ModifyClassCommand
 from .ModifyMethodCommand import ModifyMethodCommand
+from .CreateClassCommand import CreateClassCommand
+from .CreateMethodCommand import CreateMethodCommand
+from .ReplaceWithCommand import ReplaceWithCommand

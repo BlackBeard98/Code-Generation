@@ -1,7 +1,11 @@
 class DecoratedBy():
     @property
     def Decorators(self):
-        return self.__decorators
+        try:
+            return self.__decorators
+        except:
+            self.__decorators = []
+            return self.__decorators
       
     # Setter method
     @Decorators.setter
