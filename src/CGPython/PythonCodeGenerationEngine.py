@@ -47,14 +47,24 @@ class PythonCodeGenEngine(CodeGenEngine):
         return self.__resolver
 
     def From(self ,path: str) -> 'PythonCodeGenEngine':
-        self.project =  os.path.abspath(path).replace("\\","/")
+        path = os.path.abspath(path).replace("\\","/")
+        if os.path.isfile(path):
+            self.project =  [path]
+        elif os.path.isdir(path):
+            self.project = [os.path.abspath(f) for f in os.listdir(path) if os.path.isfile(f) and f.split(".")[-1] =="py"]
+
         return self
 
     def Select(self,i_type:T)-> PythonMultipleTargets[T]:
-        with open(self.project,"r") as r:
-            tree = parse(r.read(),type_comments=True)
-            self.mapper[self.project] = tree
-            return PythonMultipleTargets([PythonSingleTarget(node, self, self.project) for node in Selector(tree,type(i_type)).run()], self)
+        for py in self.project :   
+            with open(py,"r") as r:
+                tree = None
+                if not py in self.mapper:
+                    tree = parse(r.read(),type_comments=True)
+                    self.mapper[py] = tree
+                else:
+                    tree = self.mapper[py]
+                return PythonMultipleTargets([PythonSingleTarget(node, self, py) for node in Selector(tree,type(i_type)).run()], self)
         
 
 

@@ -1,16 +1,34 @@
-from Core import Engine
 import ast
-import astor
+import sys
+sys.path.append("..")
+from ast import AST
+from CodeGenerationCore import CommandHandler , Command , Target 
+from CodeGenerationCore import Target
+from CodeGenerationCore import CodeGenEngine
+from CGPython.Commands.ReplaceWithCommand import ReplaceWithCommand
+from ast import NodeTransformer, ClassDef, Constant , Expr
+from CGPython.CommandHandlers.utils import Handles
 
 
+@Handles(ReplaceWithCommand)
+class ModifyMethodCommandHandler(CommandHandler[ReplaceWithCommand], NodeTransformer):
 
-def change_name(node):
-    node.name = node.name + "_test"
 
-a = Engine().From(
-    "C:\\Users\\carlos\\Desktop\\Tesis\\Codigo\\Code-Generation\\src\\mod1.py").Select(
-    ast.ClassDef).Action(
-    change_name).run()
-print(a)
-b = astor.to_source(a)
-print(b)
+    def ProcessTarget(self, target:Target, engine:CodeGenEngine):
+        tree = engine.mapper[target.path]
+        self.current_target = target
+        self.visit(tree)
+        
+
+
+    def generic_visit (self, node):
+        if node == self.current_target.node:
+            return Expr(value=Constant(value=5))
+           #return NodeTransformer.generic_visit(self,ast.parse(self.Command.Body,mode="eval"))
+        return NodeTransformer.generic_visit(self,node)
+   
+    def Command(self) :
+        pass
+        ##return super().Command
+
+   

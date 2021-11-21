@@ -1,24 +1,22 @@
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
-class Using(ABC):
+class Using(metaclass =ABCMeta):
     
     @abstractmethod
     def Using(self, usingSelector):
         pass
 
-class Where(ABC):
+class Where(metaclass =ABCMeta):
     @abstractmethod
     def Where(self, WhereSelector):
         pass
 
-
-
-class TargetGet(ABC):
+class Get(metaclass =ABCMeta):
     @abstractmethod
-    def Get(self , key , value):
+    def Get(self, arg):
         pass
 
-class SingleTargeter(ABC):
+class SingleTargeter(metaclass =ABCMeta):
    
     @property
     @abstractmethod
@@ -35,5 +33,12 @@ class SingleTargeter(ABC):
     def Execute(self,comandModifiers):
         pass
 
-class Target(SingleTargeter,Using,Where,TargetGet):
+class SingleTarget(SingleTargeter,Using,Get):
+    pass
+
+class MultipleTargeters():
+    @abstractmethod
+    def Execute(self,comandModifiers):
+        pass
+class MultipleTargets(MultipleTargeters,Using,Where):
     pass

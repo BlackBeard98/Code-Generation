@@ -32,7 +32,7 @@ class ModifyClassCommandHandler(CommandHandler[ModifyClassCommand], NodeTransfor
             except:
                 pass
             try:
-                node.body = [self.Command.Body]
+                node.body = self.Command.Body
             except: 
                 pass
             try:
@@ -52,5 +52,5 @@ class ModifyClassCommandHandler(CommandHandler[ModifyClassCommand], NodeTransfor
         return NodeTransformer.generic_visit(self,node)
     
     def Command(self) :
-        return super().Command
-
+        pass
+        ##return super().Command

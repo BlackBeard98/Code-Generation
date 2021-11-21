@@ -104,18 +104,25 @@ print(f"{name}")
 
     def test_ReplaceWith(self):
         def func(cmd:ReplaceWithCommand,name):
-            cmd.WithBody(
-f'''
-class A_{name}:
-    pass
-'''
-            )
+            class B:
+                def __init__(self) -> None:
+                    pass
+            
+            cmd.WithNode(B)
+        
+        def func2(cmd:ModifyClassCommand):
+                cmd.WithName("Hola")
+            
         (self.Engine.From("src/testcases/ReplaceWith/in.py")
                     .Select(ClassDef())
                     .Select(FunctionDef())
                     .Using(lambda x: (x.node.name,"name"))
-                    .Execute(func))
+                    .Execute(func)
+                    )
+        self.Engine.From("src/testcases/ReplaceWith/in.py").Select(ClassDef()).Select(ClassDef()).Execute(func2)
         a = self.Engine.mapper[os.path.abspath("src/testcases/ReplaceWith/in.py").replace("\\","/")]
-        s = ""
+        with open(os.path.abspath("src/testcases/ReplaceWith/out.py"),"r") as f:
+            s = f.read()
+        #print(astor.to_source(a))
 if __name__ == '__main__':
     unittest.main()

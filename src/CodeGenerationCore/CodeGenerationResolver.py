@@ -1,6 +1,6 @@
-from abc import ABC, abstractclassmethod, abstractmethod
-
-class CodeGenResolver(ABC):
+from abc import ABCMeta, abstractclassmethod, abstractmethod
+#from .CommandHandler import CommandHandler
+class CodeGenResolver(metaclass =ABCMeta):
     @abstractmethod
     def Build():
         pass
@@ -11,5 +11,5 @@ class CodeGenResolver(ABC):
     def ResolveCommand():
         pass
     @abstractmethod
-    def ResolveCommandHandler(commandBuilder):
+    def ResolveCommandHandler(commandBuilder): #->CommandHandler:
         pass

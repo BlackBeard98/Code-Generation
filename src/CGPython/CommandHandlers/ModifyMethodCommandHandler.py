@@ -19,7 +19,6 @@ class ModifyMethodCommandHandler(CommandHandler[ModifyMethodCommand], NodeTransf
         tree = engine.mapper[target.path]
         self.current_target = target
         self.visit(tree)
-        self
 
 
 
@@ -30,12 +29,14 @@ class ModifyMethodCommandHandler(CommandHandler[ModifyMethodCommand], NodeTransf
             except:
                 pass
             try:
-                node.body = [self.Command.Body]
+                node.body = self.Command.Body
             except:
                 pass
             for dec in self.Command.Decorators:
                 if dec[1] == ():
                     node.decorator_list.append(ast.Name(dec[0],ast.Load()))
+                elif dec[1] == (None,):
+                    node.decorator_list.append(ast.Call(ast.Name(dec[0],ast.Load()),[],[]))
                 else:
                     arg = [ast.parse(x,mode='eval') for x in dec[1]]
                     node.decorator_list.append(ast.Call(ast.Name(dec[0],ast.Load()),arg,[]))
@@ -43,10 +44,13 @@ class ModifyMethodCommandHandler(CommandHandler[ModifyMethodCommand], NodeTransf
                 node.body.append(self.Command.Tail)
             except:
                 pass
+            try :
+                self.Command.RArgs
+                node.args.args = [ag for ag in node.args.args if not ag.arg in [name[0] for name in self.Command.RArgs] ]
+            except:
+                pass
                     
         return NodeTransformer.generic_visit(self,node)
     
     def Command(self) :
-        return super().Command
-
-   
+        pass

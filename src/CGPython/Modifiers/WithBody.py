@@ -1,8 +1,11 @@
 import ast
+from typing import Union, Callable
+import inspect
+import re
+from .utils import _get_ast
+
 class WithBody():
 
-    def __init__(self) -> None:
-        pass  
     # Getter method
     @property
     def Body(self):
@@ -13,10 +16,11 @@ class WithBody():
     def Body(self, val):
         self.__body = val
     
-    def a(self):
-        pass
 
-    def WithBody(self, sbody:str):
-        import inspect
-        self.Body = ast.parse(sbody)
+    def WithBody(self, body:Union[str,Callable]):
+        if isinstance( body, str):
+            self.Body = [ast.parse(body)]
+        if isinstance(body,Callable):
+            self.Body = _get_ast(body).body
         return self
+
