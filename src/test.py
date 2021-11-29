@@ -7,7 +7,7 @@ from CGPython import PythonCodeGenEngine , PythonGenerationResolver
 from CGPython.Commands import *
 
 
-class TestSum(unittest.TestCase):
+class TestMeta(unittest.TestCase):
 
     def __init__(self, methodName: str) -> None:
         super().__init__(methodName=methodName)

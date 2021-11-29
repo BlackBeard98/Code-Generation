@@ -1,5 +1,7 @@
-from ..CGPython import CodeGenerationTransformer
-from ..CGPython.Commands import ModifyMethodCommand
+import sys
+sys.path.append("..")
+from CGPython import CodeGenerationTransformer
+from CGPython.Commands import ModifyMethodCommand
 from ast import ClassDef, FunctionDef
 
 
