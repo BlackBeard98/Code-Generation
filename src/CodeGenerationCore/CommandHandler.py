@@ -1,5 +1,6 @@
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar,Type
 from .CodeGenerationEngine import CodeGenEngine
+from .Command import Command as C
 from abc import ABCMeta , abstractclassmethod, abstractmethod
 
 T = TypeVar("T")
@@ -13,7 +14,7 @@ class CommandHandler(Generic[T]  , metaclass=ABCMeta):
         pass
 
     @classmethod
-    def CommandType(cls):
+    def CommandType(cls)->Type[C]:
         return cls.__type
     
     @classmethod

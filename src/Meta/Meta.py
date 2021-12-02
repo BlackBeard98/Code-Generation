@@ -10,13 +10,15 @@ import importlib
 import Transformers
 import astor
 from CGPython import CodeGenerationTransformer, PythonCodeGenEngine,PythonGenerationResolver
+from CodeGenerationCore import CommandHandler
+from CGPython.utils import get_all_subclasses
 from inspect import isclass
 
-
 def main():
-    # transformer_name = "C:\\Users\\carlos\\Desktop\\Tesis\\Codigo\\Code-Generation\\src\\Transformers\\TrueStaticTransformer.py"
+    # transformer_name = '"TrueStaticTransformer"'
     transformer_name = sys.argv[1]
     path = sys.argv[2]
+    # path ="C:\\Users\\carlos\\Desktop\\Nueva carpeta (6)\\main.py"
     path = os.path.abspath(path).replace("\\","/")
 
     x = re.search('^".*"$',transformer_name)
@@ -36,7 +38,7 @@ def main():
                 transformer = attribute()
 
 
-    transformer.Engine = PythonCodeGenEngine(PythonGenerationResolver())
+    transformer.Engine = PythonCodeGenEngine(PythonGenerationResolver(get_all_subclasses(CommandHandler)))
     transformer.Engine.From(path)
     transformer.Transform()
     mapper = transformer.Engine.mapper

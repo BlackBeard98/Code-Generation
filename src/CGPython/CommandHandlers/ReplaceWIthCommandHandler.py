@@ -11,7 +11,7 @@ from .utils import Handles
 
 
 @Handles(ReplaceWithCommand)
-class ModifyMethodCommandHandler(CommandHandler[ReplaceWithCommand], NodeTransformer):
+class ReplaceWithCommandHandler(CommandHandler[ReplaceWithCommand], NodeTransformer):
 
 
     def ProcessTarget(self, target:Target, engine:CodeGenEngine):
