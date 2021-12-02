@@ -41,7 +41,7 @@ class ModifyMethodCommandHandler(CommandHandler[ModifyMethodCommand], NodeTransf
                     arg = [ast.parse(x,mode='eval') for x in dec[1]]
                     node.decorator_list.append(ast.Call(ast.Name(dec[0],ast.Load()),arg,[]))
             try:
-                node.body.append(self.Command.Tail)
+                node.body.extend(self.Command.Tail)
             except:
                 pass
             try :

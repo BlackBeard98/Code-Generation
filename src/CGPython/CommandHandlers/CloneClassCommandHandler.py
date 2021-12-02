@@ -61,7 +61,7 @@ class CloneClassCommandHandler(CommandHandler[CloneClassCommand], NodeTransforme
             except: 
                 pass
             try:
-                node.body.append(self.Command.Tail)
+                node.body.extend(self.Command.Tail)
             except:
                 pass
             try:

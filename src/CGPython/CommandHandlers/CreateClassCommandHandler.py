@@ -21,7 +21,7 @@ class ModifyMethodCommandHandler(CommandHandler[CreateClassCommand], NodeTransfo
         self.visit(tree)
         self
 
-    def create(self ,node):
+    def create(self ,node:ClassDef):
         try:
             node.name = self.Command.Name
         except:
@@ -43,7 +43,7 @@ class ModifyMethodCommandHandler(CommandHandler[CreateClassCommand], NodeTransfo
                 arg = [ast.parse(x,mode='eval') for x in dec[1]]
                 node.decorator_list.append(ast.Call(ast.Name(dec[0],ast.Load()),arg,[]))
         try:
-            node.body.append(self.Command.Tail)
+            node.body.extend(self.Command.Tail)
         except:
             pass
 

@@ -15,10 +15,10 @@ from CGPython.utils import get_all_subclasses
 from inspect import isclass
 
 def main():
-    # transformer_name = '"TrueStaticTransformer"'
+    # transformer_name = '"LogTransformer"'
     transformer_name = sys.argv[1]
     path = sys.argv[2]
-    # path ="C:\\Users\\carlos\\Desktop\\Nueva carpeta (6)\\main.py"
+    # path ="C:\\Users\\carlos\\Desktop\\Demo\\Ejemplo5"
     path = os.path.abspath(path).replace("\\","/")
 
     x = re.search('^".*"$',transformer_name)

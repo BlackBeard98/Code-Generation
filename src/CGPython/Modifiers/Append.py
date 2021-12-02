@@ -9,7 +9,7 @@ class Append():
     # Setter method
     @Tail.setter
     def Tail(self, val):
-        self.__tail = val
+        self.__tail.append(val)
     
   
 
@@ -18,5 +18,8 @@ class Append():
             self.Tail
         except:
             self.__tail= []
-        self.Tail = ast.parse(s_tail)
+
+        body = ast.parse(s_tail).body
+        for st in body:
+            self.Tail = st
         return self

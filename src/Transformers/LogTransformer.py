@@ -9,4 +9,4 @@ class LogTransformer(CodeGenerationTransformer):
     def Transform(self):
         def func(cmd:ModifyMethodCommand):
             cmd.DecoratedBy("excepcion",None)
-        self.Engine.Select(ClassDef()).Select(FunctionDef).Execute(func)
+        self.Engine.Select(ClassDef()).Select(FunctionDef()).Execute(func)

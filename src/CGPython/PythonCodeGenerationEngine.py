@@ -51,11 +51,13 @@ class PythonCodeGenEngine(CodeGenEngine):
         if os.path.isfile(path):
             self.project =  [path]
         elif os.path.isdir(path):
-            self.project = [os.path.abspath(f) for f in os.listdir(path) if os.path.isfile(f) and f.split(".")[-1] =="py"]
+            ld = os.listdir(path)
+            self.project = [path+"/"+f for f in ld if os.path.isfile(path+"/"+f) and f.split(".")[-1] =="py"]
 
         return self
 
     def Select(self,i_type:T)-> PythonMultipleTargets[T]:
+        targets = []
         for py in self.project :   
             with open(py,"r") as r:
                 tree = None
@@ -64,8 +66,8 @@ class PythonCodeGenEngine(CodeGenEngine):
                     self.mapper[py] = tree
                 else:
                     tree = self.mapper[py]
-                return PythonMultipleTargets([PythonSingleTarget(node, self, py) for node in Selector(tree,type(i_type)).run()], self)
-        
+                targets.extend([PythonSingleTarget(node, self, py) for node in Selector(tree,type(i_type)).run()])
+        return PythonMultipleTargets(targets, self)
 
 
 if __name__ == '__main__':
