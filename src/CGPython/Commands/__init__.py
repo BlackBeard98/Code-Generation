@@ -5,3 +5,4 @@ from .CreateMethodCommand import CreateMethodCommand
 from .ReplaceWithCommand import ReplaceWithCommand
 from .CloneClassCommand import CloneClassCommand
 from .DeleteCommand import DeleteCommand
+from .AfterNodeCommand import AfterNodeCommand

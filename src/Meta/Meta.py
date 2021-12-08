@@ -15,10 +15,10 @@ from CGPython.utils import get_all_subclasses
 from inspect import isclass
 
 def main():
-    # transformer_name = '"LogTransformer"'
-    transformer_name = sys.argv[1]
-    path = sys.argv[2]
-    # path ="C:\\Users\\carlos\\Desktop\\Demo\\Ejemplo5"
+    transformer_name = 'C:\\Users\\carlos\\Desktop\\dsl\\dsl.py'
+    # transformer_name = sys.argv[1]
+    # path = sys.argv[2]
+    path ='C:\\Users\\carlos\\Desktop\\dsl\\test.py'
     path = os.path.abspath(path).replace("\\","/")
 
     x = re.search('^".*"$',transformer_name)
@@ -33,7 +33,9 @@ def main():
         real_name = real_name[:-3 ]if  real_name[-3:] == ".py" else real_name 
         sys.path.append(real_dir)      
         module = importlib.import_module(real_name)
-        attribute = getattr(module, real_name)
+        members = inspect.getmembers(module)
+        clstrs = [o for o in members if inspect.isclass(o[1]) and issubclass(o[1], CodeGenerationTransformer) and o[1] !=CodeGenerationTransformer]
+        attribute = getattr(module, clstrs[0][0])
         if isclass(attribute) and issubclass(attribute,CodeGenerationTransformer):
                 transformer = attribute()
 

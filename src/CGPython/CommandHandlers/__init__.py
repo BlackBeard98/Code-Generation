@@ -2,6 +2,7 @@ from .ModifyClassCommandHandler import ModifyClassCommandHandler
 from .ModifyMethodCommandHandler import ModifyMethodCommandHandler
 from .CreateClassCommandHandler import CreateClassCommand
 from .CreateMethodCommandHandler import CreateMethodCommandHandler
-from .ReplaceWithCommandHandler import ReplaceWithCommand
+from .ReplaceWithCommandHandler import ReplaceWithCommandHandler
 from .CloneClassCommandHandler import CloneClassCommandHandler
 from .DeleteCommandHandler import DeleteCommandHandler
+from .AfterNodeCommandHandler import AfterNodeCommandHandler
